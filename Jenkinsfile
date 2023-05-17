@@ -1,9 +1,9 @@
-environment {
-  GOOGLE_APPLICATION_CREDENTIALS = credentials('nimble-unison-386200')
-}
+
 pipeline {
   agent any
-  
+  environment {
+    GOOGLE_APPLICATION_CREDENTIALS = credentials('nimble-unison-386200')
+  }
   stages {
     stage('Checkout') {
       steps {

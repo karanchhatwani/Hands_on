@@ -13,15 +13,15 @@ pipeline {
     
     stage('Terraform Init') {
   steps {
-    withCredentials([file(credentialsId: 'your-gcp-credentials-id', variable: 'GCP_CREDENTIALS_FILE')]) {
+    withCredentials([file(credentialsId: 'nimble-unison-386200', variable: 'GCP_CREDENTIALS_FILE')]) {
       sh 'terraform init -var-file=${GCP_CREDENTIALS_FILE}'
     }
   }
-}
+ }
 
 stage('Terraform Plan') {
   steps {
-    withCredentials([file(credentialsId: 'your-gcp-credentials-id', variable: 'GCP_CREDENTIALS_FILE')]) {
+    withCredentials([file(credentialsId: 'nimble-unison-386200', variable: 'GCP_CREDENTIALS_FILE')]) {
       sh 'terraform plan -var-file=${GCP_CREDENTIALS_FILE}'
     }
   }
@@ -29,9 +29,8 @@ stage('Terraform Plan') {
 
 stage('Terraform Apply') {
   steps {
-    withCredentials([file(credentialsId: 'your-gcp-credentials-id', variable: 'GCP_CREDENTIALS_FILE')]) {
+    withCredentials([file(credentialsId: 'nimble-unison-386200', variable: 'GCP_CREDENTIALS_FILE')]) {
       sh 'terraform apply -auto-approve -var-file=${GCP_CREDENTIALS_FILE}'
     }
   }
 }
-

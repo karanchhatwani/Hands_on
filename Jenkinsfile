@@ -12,22 +12,26 @@ pipeline {
     }
     
     stage('Terraform Init') {
-      steps {
-        // Initialize Terraform
-        sh 'terraform init'
-      }
-    }
-    
-    stage('Terraform Plan') {
-      steps {
-        sh 'terraform plan'
-      }
-    }
-    
-    stage('Terraform Apply') {
-      steps {
-        sh 'terraform apply -auto-approve'
-      }
+  steps {
+    withCredentials([file(credentialsId: 'your-gcp-credentials-id', variable: 'GCP_CREDENTIALS_FILE')]) {
+      sh 'terraform init -var-file=${GCP_CREDENTIALS_FILE}'
     }
   }
 }
+
+stage('Terraform Plan') {
+  steps {
+    withCredentials([file(credentialsId: 'your-gcp-credentials-id', variable: 'GCP_CREDENTIALS_FILE')]) {
+      sh 'terraform plan -var-file=${GCP_CREDENTIALS_FILE}'
+    }
+  }
+}
+
+stage('Terraform Apply') {
+  steps {
+    withCredentials([file(credentialsId: 'your-gcp-credentials-id', variable: 'GCP_CREDENTIALS_FILE')]) {
+      sh 'terraform apply -auto-approve -var-file=${GCP_CREDENTIALS_FILE}'
+    }
+  }
+}
+

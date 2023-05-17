@@ -1,5 +1,4 @@
 
-
 resource "google_compute_target_pool" "load_balancer_pool" {
   name   = "lol-pool"
   region = "us-central1"

@@ -1,4 +1,9 @@
 FROM alpine:latest
-RUN  yum install httpd -y
-COPY ./public-html/ /var/www/html/
-CMD ["httpd-foreground"]
+
+RUN apk update && apk add apache2
+
+COPY index.html /var/www/html/
+
+EXPOSE 80
+
+CMD ["httpd", "-D", "FOREGROUND"]

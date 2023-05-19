@@ -1,7 +1,7 @@
 #!/bin/bash
-
 # Install the necessary software
-sudo apt-get update
+sudo su -
+sudo apt-get update 
 sudo apt-get install -y apache2 php libapache2-mod-php
 
 # Create a sample PHP file

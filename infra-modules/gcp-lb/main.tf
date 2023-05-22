@@ -1,18 +1,19 @@
 
 resource "google_compute_target_pool" "load_balancer_pool" {
-  name   = "lol-pool"
+  name   = "lol-pool1"
   region = "us-central1"
 
   instances = [
-    "us-central1-a/web1"
+    "us-central1-a/web"
   ]
   health_checks = [
-    "us-central1-a/web-health-check"
+    "us-central1-a/web-health-check1"
   ]
+  depends_on = [ google_compute_http_health_check.web_health_check ]
 }
 resource "google_compute_http_health_check" "web_health_check" {
-  name                = "web-health-check"
-  port                = 80
+  name                = "web-health-check1"
+  port                = 8080
   request_path        = "/"
   check_interval_sec  = 10
   timeout_sec         = 5
@@ -21,12 +22,12 @@ resource "google_compute_http_health_check" "web_health_check" {
 }
 
 resource "google_compute_forwarding_rule" "web_forwarding_rule" {
-  name                  = "web-forwarding-rule"
+  name                  = "web-forwarding-rule1"
   region                = "us-central1"
   target                = google_compute_target_pool.load_balancer_pool.self_link
   load_balancing_scheme = "EXTERNAL"
   ip_protocol           = "TCP"
-  port_range            = "80"
+  port_range            = "8080"
 }
 
 

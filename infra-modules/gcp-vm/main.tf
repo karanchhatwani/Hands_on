@@ -1,26 +1,14 @@
 resource "google_compute_instance" "web" {
-  name = "web1"
+  name = "web"
   machine_type = "n1-standard-1"
   zone = "us-central1-a"
   boot_disk {
     initialize_params {
-      image = "ubuntu-minimal-2004-focal-v20230427"
+      image = "image-1"
     }
   }
   network_interface {
     subnetwork = var.private_subnet
     network_ip = var.private_vpc
     }
-  metadata = {
-    startup-script = <<-EOF
-      #!/bin/bash
-
-      sudo apt-get update
-      sudo apt-get install -y apache2 php libapache2-mod-php
-
-      echo "<?php phpinfo(); ?>" | sudo tee /var/www/html/index.php
-
-      sudo systemctl start apache2
-    EOF
-  }
 }

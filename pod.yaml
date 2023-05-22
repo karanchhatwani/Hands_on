@@ -1,0 +1,28 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: mysql-client-pod
+spec:
+  containers:
+    - name: mysql-client
+      image: mysql:latest 
+      command: ["/bin/sh", "-c"]
+      args: ["sleep infinity"]
+    - name: cloud-sql-proxy
+      image: gcr.io/cloud-sql-connectors/cloud-sql-proxy:2.2.0
+      args: 
+        - "--credentials-file"
+        - "/creds/service-account-key.json"
+        - "--private-ip" 
+        - "nimble-unison-386200:us-central1:main"
+      volumeMounts:
+        - name: service-account-key
+          mountPath: /creds/service-account-key.json
+          subPath: service-account-key.json 
+  volumes:
+    - name: service-account-key
+      secret:
+        secretName: creds-secret
+        items:
+          - key: creds.json
+            path: service-account-key.json

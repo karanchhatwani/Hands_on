@@ -11,3 +11,9 @@ variable "machine_type" {
   description = "The machine type of the nodes."
   default     = "n1-standard-1"
 }
+
+variable "vpc" {
+  description = "using private VPC"
+  default = ""
+  
+}
